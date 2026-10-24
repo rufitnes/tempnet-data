@@ -83,7 +83,7 @@ drop working; long stalls are an observation about miners, not about the measure
 3. `tempnet_export.py` derives the metrics from that capture, cross-checks the tip over RPC, and
    writes `data/stats.json`, the dashboard, the raw capture, the compact-relay index and a daily
    `.jsonl` summary.
-4. A snapshot is committed when **10 new blocks** have arrived, **15 minutes** have elapsed, or a
+4. A snapshot is committed when **10 new blocks** have arrived, **5 minutes** have elapsed, or a
    **reorg** is observed — whichever comes first — and pushed with a per-repository deploy key.
    GitHub Pages serves the dashboard from `index.html`.
 
