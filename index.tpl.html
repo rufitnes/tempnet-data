@@ -66,7 +66,7 @@
     · machine-readable: <a href="data/stats.json">data/stats.json</a>
     · raw capture: <a href="data/events.csv">data/events.csv</a><br>
     Snapshot every 10 blocks or 15 minutes (whichever first), plus immediately on reorg.
-    <em>receive delay</em> = local wall-clock receive time − header timestamp (positive = node behind chain time).
+    <em>timestamp deviation</em> = local wall-clock receive time − header timestamp (positive = node behind chain time).
     <em>MTP lag</em> = tip header time − median time past.
     <em>via</em> = <code>compact</code> when the node logged a successful compact-block (BIP152)
     reconstruction for that hash, <code>direct</code> otherwise.
@@ -108,8 +108,8 @@ function card(k, v, sub){
   card("MTP lag", fmtInt(tip.mtp_lag_s) + " s");
   card("10-block window (median)", fmt(D.windows_10.median, 1) + " s",
        `target ${net.target_time * 10} s`);
-  card("receive delay (median)", fmt(D.receive_delay.median, 1) + " s",
-       `p99 ${fmt(D.receive_delay.p99, 1)} s`);
+  card("timestamp deviation (median)", fmt(D.timestamp_deviation.median, 1) + " s",
+       `p99 ${fmt(D.timestamp_deviation.p99, 1)} s`);
   card("peers", fmtInt(net.peers));
   card("hashrate", net.hashrate ? (net.hashrate/1e6).toFixed(1) + " MH/s" : "—");
   card("difficulty", fmt(net.difficulty, 4));
@@ -125,7 +125,7 @@ function card(k, v, sub){
   add("interval (last 100)", D.intervals_last_100);
   add("interval (last 24 h)", D.intervals_last_24h);
   add("10-block window", D.windows_10);
-  add("receive delay", D.receive_delay);
+  add("timestamp deviation", D.timestamp_deviation);
 
   const t = $("#dist");
   t.innerHTML = rows.map((r, i) =>
@@ -144,6 +144,10 @@ function card(k, v, sub){
     if (cp.missing_tx && cp.missing_tx.n){
       txt += ` · missing txs requested: median ${fmt(cp.missing_tx.median,1)}, max ${fmt(cp.missing_tx.max,0)}`;
     }
+  }
+  const ex = D.expected;
+  if (ex){
+    txt += ` · expected under exponential (target ${ex.target_time} s): median ${fmt(ex.median,1)} · p90 ${fmt(ex.p90,1)} · p99 ${fmt(ex.p99,1)}`;
   }
   extra.textContent = txt;
   t.parentNode.appendChild(extra);

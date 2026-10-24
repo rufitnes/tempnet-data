@@ -208,7 +208,7 @@ def compute(blocks, tip_height):
                     "h": b["height"],
                     "t": iso(b["header_time"]),
                     "dt": round(dt, 1),
-                    "recv": (round((b["local_time"] - b["header_time"]).total_seconds(), 1)
+                    "tsdev": (round((b["local_time"] - b["header_time"]).total_seconds(), 1)
                              if b["local_time"] and b["header_time"] else None),
                 })
         prev = b
@@ -224,12 +224,22 @@ def compute(blocks, tip_height):
     else:
         last24 = []
 
+    t = 60
+    expected = {
+        "model": "exponential (constant hashrate and difficulty)",
+        "target_time": t,
+        "median": round(t * 0.6931471805599453, 2),
+        "p90": round(t * 2.302585092994046, 2),
+        "p99": round(t * 4.605170185988092, 2),
+        "over_5min_pct": round(100 * 0.006737946999085467, 3),
+    }
     return {
+        "expected": expected,
         "intervals": summarize(intervals),
         "intervals_last_100": summarize(intervals[-100:]),
         "intervals_last_24h": summarize(last24),
         "windows_10": summarize(windows),
-        "receive_delay": summarize(delays),
+        "timestamp_deviation": summarize(delays),
         "via": via_counts,
         "compact": {
             "captured_via_compact": reassembled,
@@ -360,7 +370,7 @@ def main():
         "height": height,
         "intervals": stats["intervals"],
         "windows_10": stats["windows_10"],
-        "receive_delay": stats["receive_delay"],
+        "timestamp_deviation": stats["timestamp_deviation"],
         "mtp_lag_s": mtp_lag,
         "peers": peers,
     }

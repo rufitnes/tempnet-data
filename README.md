@@ -49,7 +49,7 @@ data/full-range-measure.json  aggregate over the whole tempnet history
 |---|---|
 | `interval` | Difference between the **header timestamps** of two consecutive blocks. |
 | `window_10` | Sum of 10 consecutive intervals (non-overlapping chunks, in height order, aligned to the first interval of the range — a stall near a chunk boundary can be split across two windows). |
-| `receive_delay` | **Local wall-clock receive time** − block header timestamp. Positive = the node learned about the block after the time written in the header. This is *not* propagation time from the miner: it includes the miner's timestamp imprecision, relay latency and our own clock drift. |
+| `timestamp_deviation` | **Local wall-clock receive time** − block header timestamp. It is *not* a propagation measure: a miner may timestamp anywhere between MTP and +2 h, and need not refresh the timestamp on every hash, so an honest miner can legitimately stamp a block minutes "in the past" relative to real time. What we publish is therefore *timestamp deviation from our clock*, an upper bound on the actual receive delay. (Renamed from `receive_delay` on 2026-10-24 — the old name implied a delay we cannot isolate.) |
 | `mtp_lag` | Tip header time − median time past (`mediantime`) of the tip. |
 | `via` | `compact` when the node logged a successful compact-block reconstruction for that block hash, `direct` otherwise. Reflects **our** receive path only. |
 | `compact.missing_tx` | `... and N txn requested` after reconstructing from a `cmpctblock` — transactions missing from the compact relay. |
@@ -57,11 +57,21 @@ data/full-range-measure.json  aggregate over the whole tempnet history
 
 All percentiles are **nearest-rank**.
 
-### Why these numbers look odd
+### Why the median is below the target (it is expected)
 
-The tempnet targets 60-second blocks, but its hashrate is tiny and bursty. Expect a **median
-interval well below 60 s** and a **p99 in the hundreds of seconds**, with occasional stalls of
-hours. That skew is the phenomenon being studied, not a measurement bug.
+With constant hashrate and difficulty, block intervals are **exponentially distributed**: if the
+mean is the 60 s target, the **median is `60 × ln 2 ≈ 41.6 s`**, p90 ≈ 138 s, p99 ≈ 276 s, and
+about **0.67 %** of blocks exceed 5 minutes. A median of ~43-45 s is not a sign of faster blocks;
+it is the shape of the distribution.
+
+The tempnet also **drops difficulty to 1 whenever no block is found for 2× the target time**
+(2 minutes). That truncates the tail, so a long stall can only happen when hashrate is effectively
+zero or the miner is not picking up the difficulty drop — and then a difficulty-1 block still takes
+time. Example: height 328,223 (16 Oct) was mined at difficulty 1 after a **20,863 s** gap, which
+implies roughly **200 kH/s** of mining at that moment.
+
+So: a low median is expected; a *shorter* tail than the exponential prediction is the difficulty
+drop working; long stalls are an observation about miners, not about the measurement.
 
 ## Method
 
@@ -113,10 +123,10 @@ block-arrival times, and per-peer attribution of announcements.
 Top-level keys: `generated_at`, `chain`, `network` (target time, difficulty, hashrate, peers,
 mempool), `sync` (height, headers, progress, IBD flag), `tip` (height, hash, header time,
 mediantime, `mtp_lag_s`), `captured` (first/last height and time in the CSV), `reorgs`, then
-`intervals`, `intervals_last_100`, `intervals_last_24h`, `windows_10`, `receive_delay` (each with
+`expected` (exponential model for the target time), `intervals`, `intervals_last_100`, `intervals_last_24h`, `windows_10`, `timestamp_deviation` (each with
 `n`, `mean`, `median`, `p90`, `p99`, `min`, `max`), `via`, `compact` (blocks reconstructed from
 `cmpctblock` vs captured, and `missing_tx` stats), and `series` (last 240 blocks: `h`, `t`, `dt`,
-`recv`).
+`tsdev`).
 
 `data/compact.csv` columns: `log_time,hash,prefilled,from_mempool,extra_pool,requested`.
 `history/YYYY-MM-DD.jsonl` holds one compact summary line per snapshot.
