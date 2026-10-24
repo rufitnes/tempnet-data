@@ -31,7 +31,7 @@ DATADIR = os.environ.get("TEMPNET_DATADIR", "/mnt/tempnet/data")
 COMPACT_CSV = os.path.join(DATA, "compact.csv")
 COMPACT_OFFSET = os.path.join(BASE, ".compact_offset")
 BLOCK_TRIGGER = 10
-SECS_TRIGGER = 900
+SECS_TRIGGER = 300
 SERIES_N = 240
 
 REORG_EVENTS = {"REORGANIZE", "DisconnectTip", "BlockDisconnected"}

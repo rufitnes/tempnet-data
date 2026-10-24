@@ -42,6 +42,7 @@
     <span class="pill" id="status">...</span>
     <span class="sub" id="updated"></span>
     <span class="sub" id="captured"></span>
+    <a class="sub" href="#" id="fresh">force refresh</a>
   </header>
 
   <div class="grid" id="cards"></div>
@@ -76,6 +77,7 @@
 
 <script>
 const D = /*__DATA__*/null;
+document.getElementById("fresh").href = location.pathname + "?t=" + Date.now();
 const $ = s => document.querySelector(s);
 const fmt = (n, d=2) => (n === null || n === undefined) ? "—" : Number(n).toFixed(d);
 const fmtInt = n => (n === null || n === undefined) ? "—" : Number(n).toLocaleString("en-US");
