@@ -15,10 +15,12 @@ Environment:
     TEMPNET_DATADIR node datadir
 """
 import argparse
+import base64
 import json
 import os
 import subprocess
 import sys
+import urllib.request
 
 CLI = os.environ.get(
     "TEMPNET_CLI", "/mnt/tempnet/bchn-tempnet/build/src/bitcoin-cli")
@@ -32,6 +34,36 @@ def rpc(*args):
         raise RuntimeError(r.stderr.strip() or r.stdout.strip())
     out = r.stdout.strip()
     return json.loads(out) if out[:1] in ("{", "[") else out
+
+
+def rpc_stdin(lines):
+    """JSON-RPC batch over HTTP (much faster than one bitcoin-cli per call)."""
+    cookie_path = os.path.join(DATADIR, "tempnet", ".cookie")
+    with open(cookie_path, encoding="utf-8") as f:
+        auth = "Basic " + base64.b64encode(f.read().strip().encode()).decode()
+    port = os.environ.get("TEMPNET_RPCPORT", "48332")
+    url = f"http://127.0.0.1:{port}/"
+    out = []
+    for i in range(0, len(lines), 1000):
+        chunk = lines[i:i + 1000]
+        payload = [{"jsonrpc": "1.0", "id": j, "method": m, "params": p}
+                   for j, (m, p) in enumerate(chunk)]
+        req = urllib.request.Request(
+            url, data=json.dumps(payload).encode(),
+            headers={"Authorization": auth, "Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=120) as r:
+            res = json.loads(r.read())
+        res.sort(key=lambda x: x["id"])
+        for x in res:
+            if x.get("error"):
+                raise RuntimeError(x["error"])
+            out.append(x["result"])
+    return out
+
+
+def header_time(block_hex):
+    """Timestamp from a serialised 80-byte block header (big-endian uint32)."""
+    return int.from_bytes(bytes.fromhex(block_hex[136:144]), "little")
 
 
 def pct(vals, p):
@@ -67,10 +99,12 @@ def main():
     print(f"tip={tip}  measuring {start}..{end}", file=sys.stderr)
 
     blocks = []
-    for h in range(start, end + 1):
-        hsh = rpc("getblockhash", h)
-        hdr = rpc("getblockheader", hsh)
-        blocks.append({"height": h, "hash": hsh, "time": hdr["time"]})
+    hashes = rpc_stdin([("getblockhash", [h]) for h in range(start, end + 1)])
+    headers = rpc_stdin([("getblockheader", [h, False]) for h in hashes])
+    if len(hashes) != len(headers):
+        raise RuntimeError(f"batch mismatch: {len(hashes)} hashes, {len(headers)} headers")
+    for h, hsh, hdr in zip(range(start, end + 1), hashes, headers):
+        blocks.append({"height": h, "hash": hsh, "time": header_time(hdr)})
 
     intervals = [blocks[i + 1]["time"] - blocks[i]["time"]
                  for i in range(len(blocks) - 1)]
@@ -81,9 +115,8 @@ def main():
         mtps.append({"height": blocks[i]["height"], "time": blocks[i]["time"],
                      "mtp": window[5], "lag": blocks[i]["time"] - window[5]})
 
-    windows = [{"height": blocks[i]["height"],
-                "span": blocks[i]["time"] - blocks[i - 9]["time"]}
-               for i in range(9, len(blocks))]
+    windows = [{"height": blocks[i + 9]["height"], "span": sum(intervals[i:i + 10])}
+               for i in range(0, len(intervals) - 9, 10)]
 
     out = {
         "tip": tip,

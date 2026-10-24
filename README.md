@@ -12,6 +12,7 @@ never records, and commits the result here every few minutes.
 - **Raw capture**: [`data/events.csv`](data/events.csv)
 - **Compact-relay index**: [`data/compact.csv`](data/compact.csv)
 - **Daily summaries**: [`history/`](history/)
+- **Full-range aggregate**: [`data/full-range-measure.json`](data/full-range-measure.json)
 
 ## Why this exists
 
@@ -39,6 +40,7 @@ tools/measure.py      offline aggregate measurement over any block range
 systemd/              unit files used on the host (paths assume /mnt/tempnet)
 data/                 published dataset (generated)
 history/              one JSON line per snapshot, per day
+data/full-range-measure.json  aggregate over the whole tempnet history
 ```
 
 ## What is measured
@@ -46,7 +48,7 @@ history/              one JSON line per snapshot, per day
 | Metric | Definition |
 |---|---|
 | `interval` | Difference between the **header timestamps** of two consecutive blocks. |
-| `window_10` | Sum of 10 consecutive intervals (non-overlapping chunks, in height order). |
+| `window_10` | Sum of 10 consecutive intervals (non-overlapping chunks, in height order, aligned to the first interval of the range — a stall near a chunk boundary can be split across two windows). |
 | `receive_delay` | **Local wall-clock receive time** − block header timestamp. Positive = the node learned about the block after the time written in the header. This is *not* propagation time from the miner: it includes the miner's timestamp imprecision, relay latency and our own clock drift. |
 | `mtp_lag` | Tip header time − median time past (`mediantime`) of the tip. |
 | `via` | `compact` when the node logged a successful compact-block reconstruction for that block hash, `direct` otherwise. Reflects **our** receive path only. |
