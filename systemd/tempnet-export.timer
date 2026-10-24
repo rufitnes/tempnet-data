@@ -1,0 +1,10 @@
+[Unit]
+Description=Run tempnet-data exporter every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=10s
+
+[Install]
+WantedBy=timers.target

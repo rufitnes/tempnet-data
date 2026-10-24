@@ -1,0 +1,17 @@
+[Unit]
+Description=Tempnet capture listener (debug.log -> events.csv)
+After=tempnet-node.service
+Requires=tempnet-node.service
+
+[Service]
+Type=simple
+User=asgaya
+WorkingDirectory=/mnt/tempnet/tempnet-data
+Environment=TEMPNET_LOG=/mnt/tempnet/data/tempnet/debug.log
+Environment=TEMPNET_EVENTS=/mnt/tempnet/events.csv
+ExecStart=/usr/bin/python3 /mnt/tempnet/tempnet-data/tempnet_listener.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

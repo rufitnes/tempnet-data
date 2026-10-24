@@ -1,0 +1,11 @@
+[Unit]
+Description=tempnet-data exporter (metrics + git snapshot)
+After=network-online.target tempnet-node.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=asgaya
+WorkingDirectory=/mnt/tempnet/tempnet-data
+Environment=GIT_TERMINAL_PROMPT=0
+ExecStart=/usr/bin/python3 /mnt/tempnet/tempnet-data/tempnet_export.py

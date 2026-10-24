@@ -14,6 +14,7 @@ whatever comes first.
 import csv
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -24,13 +25,22 @@ DATA = os.path.join(BASE, "data")
 HIST = os.path.join(BASE, "history")
 STATE = os.path.join(BASE, ".state.json")
 EVENTS_SRC = os.environ.get("TEMPNET_EVENTS", "/mnt/tempnet/events.csv")
+LOG_SRC = os.environ.get("TEMPNET_LOG", "/mnt/tempnet/data/tempnet/debug.log")
 CLI = os.environ.get("TEMPNET_CLI", "/mnt/tempnet/bchn-tempnet/build/src/bitcoin-cli")
 DATADIR = os.environ.get("TEMPNET_DATADIR", "/mnt/tempnet/data")
+COMPACT_CSV = os.path.join(DATA, "compact.csv")
+COMPACT_OFFSET = os.path.join(BASE, ".compact_offset")
 BLOCK_TRIGGER = 10
 SECS_TRIGGER = 900
 SERIES_N = 240
 
 REORG_EVENTS = {"REORGANIZE", "DisconnectTip", "BlockDisconnected"}
+
+RE_RECON = re.compile(
+    r"^(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ) Successfully reconstructed block ([0-9a-f]{64}) "
+    r"with (\d+) txn prefilled, (\d+) txn from mempool \(incl at least (\d+) from extra pool\) "
+    r"and (\d+) txn requested"
+)
 
 
 def utcnow():
@@ -87,6 +97,55 @@ def summarize(vals):
     }
 
 
+def update_compact_index():
+    """Append new compact-block reconstructions from debug.log to data/compact.csv."""
+    if not os.path.exists(LOG_SRC):
+        return
+    try:
+        offset = int(open(COMPACT_OFFSET, encoding="utf-8").read().strip())
+    except (FileNotFoundError, ValueError):
+        offset = 0
+    with open(LOG_SRC, "rb") as f:
+        f.seek(offset)
+        chunk = f.read()
+    cut = chunk.rfind(b"\n") + 1
+    complete = chunk[:cut]
+    if not complete:
+        return
+    rows = []
+    for line in complete.decode("utf-8", "replace").splitlines():
+        m = RE_RECON.match(line)
+        if m:
+            rows.append([m.group(1), m.group(2), m.group(3), m.group(4), m.group(5), m.group(6)])
+    new_file = not os.path.exists(COMPACT_CSV)
+    with open(COMPACT_CSV, "a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if new_file:
+            w.writerow(["log_time", "hash", "prefilled", "from_mempool", "extra_pool", "requested"])
+        w.writerows(rows)
+    with open(COMPACT_OFFSET, "w", encoding="utf-8") as f:
+        f.write(str(offset + len(complete)))
+
+
+def read_compact():
+    out = {}
+    if not os.path.exists(COMPACT_CSV):
+        return out
+    with open(COMPACT_CSV, newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            try:
+                out[r["hash"]] = {
+                    "t": r["log_time"],
+                    "prefilled": int(r["prefilled"]),
+                    "from_mempool": int(r["from_mempool"]),
+                    "extra_pool": int(r["extra_pool"]),
+                    "requested": int(r["requested"]),
+                }
+            except (KeyError, ValueError):
+                continue
+    return out
+
+
 def read_events():
     rows = []
     if not os.path.exists(EVENTS_SRC):
@@ -97,7 +156,7 @@ def read_events():
     return rows
 
 
-def chain_blocks(rows):
+def chain_blocks(rows, compact):
     """Unique consecutive UpdateTip blocks, ordered by height."""
     by_h = {}
     for r in rows:
@@ -117,22 +176,28 @@ def chain_blocks(rows):
         r = by_h[h]
         ht = parse_ts(r.get("header_time"))
         tl = parse_ts(r.get("ts_local"))
+        info = compact.get(r.get("hash"))
         out.append({
             "height": h,
             "hash": r.get("hash"),
             "header_time": ht,
             "local_time": tl,
-            "via": r.get("via") or "unknown",
+            "via": "compact" if info else "direct",
+            "compact": info,
         })
     return out
 
 
 def compute(blocks, tip_height):
     intervals, delays, via_counts = [], [], {}
+    reassembled, requested = 0, []
     series = []
     prev = None
     for b in blocks:
         via_counts[b["via"]] = via_counts.get(b["via"], 0) + 1
+        if b.get("compact"):
+            reassembled += 1
+            requested.append(b["compact"]["requested"])
         if b["local_time"] and b["header_time"]:
             delays.append(round((b["local_time"] - b["header_time"]).total_seconds(), 2))
         if prev is not None and b["header_time"] and prev["header_time"]:
@@ -166,6 +231,11 @@ def compute(blocks, tip_height):
         "windows_10": summarize(windows),
         "receive_delay": summarize(delays),
         "via": via_counts,
+        "compact": {
+            "captured_via_compact": reassembled,
+            "captured_total": len(blocks),
+            "missing_tx": summarize(requested),
+        },
         "series": series[-SERIES_N:],
     }
 
@@ -226,7 +296,8 @@ def main():
         return 0
 
     rows = read_events()
-    blocks = chain_blocks(rows)
+    update_compact_index()
+    blocks = chain_blocks(rows, read_compact())
     metrics = compute(blocks, info["blocks"])
     reorgs = reorg_events(rows)
 

@@ -1,0 +1,15 @@
+[Unit]
+Description=Tempnet BCHN node (2027 chipnet pre-upgrade)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=asgaya
+ExecStart=/mnt/tempnet/bchn-tempnet/build/src/bitcoind -tempnet -datadir=/mnt/tempnet/data -debug=all
+ExecStop=/mnt/tempnet/bchn-tempnet/build/src/bitcoin-cli -tempnet -datadir=/mnt/tempnet/data stop
+Restart=on-failure
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

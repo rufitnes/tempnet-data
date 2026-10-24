@@ -68,6 +68,8 @@
     Snapshot every 10 blocks or 15 minutes (whichever first), plus immediately on reorg.
     <em>receive delay</em> = local wall-clock receive time − header timestamp (positive = node behind chain time).
     <em>MTP lag</em> = tip header time − median time past.
+    <em>via</em> = <code>compact</code> when the node logged a successful compact-block (BIP152)
+    reconstruction for that hash, <code>direct</code> otherwise.
     Clocks are not NTP-disciplined; treat sub-second numbers as indicative.
   </footer>
 </div>
@@ -131,11 +133,19 @@ function card(k, v, sub){
   ).join("");
 
   const via = D.via || {};
+  const cp = D.compact || {};
   const parts = Object.entries(via).map(([k, v]) => `${k}: ${v}`).join(" · ");
   const extra = document.createElement("div");
   extra.className = "sub";
   extra.style.marginTop = "10px";
-  extra.textContent = "relay path of captured blocks — " + (parts || "n/a");
+  let txt = "relay path — " + (parts || "n/a");
+  if (cp.captured_total){
+    txt += ` · reconstructed from cmpctblock: ${cp.captured_via_compact}/${cp.captured_total}`;
+    if (cp.missing_tx && cp.missing_tx.n){
+      txt += ` · missing txs requested: median ${fmt(cp.missing_tx.median,1)}, max ${fmt(cp.missing_tx.max,0)}`;
+    }
+  }
+  extra.textContent = txt;
   t.parentNode.appendChild(extra);
 })();
 
