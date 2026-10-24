@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BCH tempnet · live telemetry</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --line:#30363d; --txt:#e6edf3;
+    --dim:#8b949e; --acc:#3fb950; --warn:#d29922; --bad:#f85149; --blue:#58a6ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+       font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .wrap{max-width:1080px;margin:0 auto;padding:24px 18px 60px}
+  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-bottom:18px}
+  h1{font-size:18px;margin:0;font-weight:600}
+  .sub{color:var(--dim);font-size:12px}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:11px;color:var(--dim)}
+  .pill.ok{color:var(--acc);border-color:#238636}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px}
+  .k{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  .v{font-size:20px;font-weight:600;margin-top:4px}
+  .v small{font-size:11px;color:var(--dim);font-weight:400}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;margin-top:14px}
+  .panel h2{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin:0 0 12px}
+  canvas{width:100%;height:220px;display:block}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th,td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left;color:var(--dim)}
+  tr:last-child td{border-bottom:none}
+  .warn{color:var(--warn)} .bad{color:var(--bad)} .ok{color:var(--acc)}
+  footer{margin-top:24px;color:var(--dim);font-size:11.5px;line-height:1.7}
+  a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>BCH tempnet · live telemetry</h1>
+    <span class="pill" id="status">...</span>
+    <span class="sub" id="updated"></span>
+    <span class="sub" id="captured"></span>
+  </header>
+
+  <div class="grid" id="cards"></div>
+
+  <div class="panel">
+    <h2>Block intervals · last blocks (target <span id="target">60</span> s)</h2>
+    <canvas id="chart"></canvas>
+  </div>
+
+  <div class="panel">
+    <h2>Distribution</h2>
+    <table id="dist"></table>
+  </div>
+
+  <div class="panel">
+    <h2>Reorgs / disconnected blocks</h2>
+    <div id="reorgs" class="sub">none observed</div>
+  </div>
+
+  <footer>
+    Source: <a href="https://github.com/rufitnes/tempnet-data" id="repo">rufitnes/tempnet-data</a>
+    · machine-readable: <a href="data/stats.json">data/stats.json</a>
+    · raw capture: <a href="data/events.csv">data/events.csv</a><br>
+    Snapshot every 10 blocks or 15 minutes (whichever first), plus immediately on reorg.
+    <em>receive delay</em> = local wall-clock receive time − header timestamp (positive = node behind chain time).
+    <em>MTP lag</em> = tip header time − median time past.
+    Clocks are not NTP-disciplined; treat sub-second numbers as indicative.
+  </footer>
+</div>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const fmt = (n, d=2) => (n === null || n === undefined) ? "—" : Number(n).toFixed(d);
+const fmtInt = n => (n === null || n === undefined) ? "—" : Number(n).toLocaleString("en-US");
+
+function card(k, v, sub){
+  const d = document.createElement("div");
+  d.className = "card";
+  d.innerHTML = `<div class="k">${k}</div><div class="v">${v}${sub ? ` <small>${sub}</small>` : ""}</div>`;
+  $("#cards").appendChild(d);
+}
+
+(function head(){
+  const net = D.network, sync = D.sync, tip = D.tip, iv = D.intervals;
+  $("#target").textContent = net.target_time;
+  const ok = !sync.ibd && sync.progress > 0.9999;
+  const st = $("#status");
+  st.textContent = ok ? "synced" : (sync.ibd ? "IBD" : "behind");
+  st.className = "pill " + (ok ? "ok" : "warn");
+  $("#updated").textContent = "updated " + D.generated_at;
+  $("#captured").textContent = D.captured.blocks
+    ? `captured ${fmtInt(D.captured.blocks)} blocks (${fmtInt(D.captured.from_height)}→${fmtInt(D.captured.to_height)})`
+    : "no blocks captured yet";
+
+  card("height", fmtInt(tip.height));
+  card("target", fmt(net.target_time, 0) + " s", "");
+  card("median interval", fmt(iv.median, 1) + " s", `n=${fmtInt(iv.n)}`);
+  card("p99 interval", fmt(iv.p99, 1) + " s",
+       iv.p99 > net.target_time * 3 ? "" : "");
+  card("max interval", fmt(iv.max, 1) + " s");
+  card("MTP lag", fmtInt(tip.mtp_lag_s) + " s");
+  card("10-block window (median)", fmt(D.windows_10.median, 1) + " s",
+       `target ${net.target_time * 10} s`);
+  card("receive delay (median)", fmt(D.receive_delay.median, 1) + " s",
+       `p99 ${fmt(D.receive_delay.p99, 1)} s`);
+  card("peers", fmtInt(net.peers));
+  card("hashrate", net.hashrate ? (net.hashrate/1e6).toFixed(1) + " MH/s" : "—");
+  card("difficulty", fmt(net.difficulty, 4));
+})();
+
+(function table(){
+  const rows = [
+    ["stat", "n", "mean", "median", "p90", "p99", "max"],
+  ];
+  const add = (name, s) => rows.push([name, fmtInt(s.n), fmt(s.mean,1), fmt(s.median,1),
+                                      fmt(s.p90,1), fmt(s.p99,1), fmt(s.max,1)]);
+  add("interval (all)", D.intervals);
+  add("interval (last 100)", D.intervals_last_100);
+  add("interval (last 24 h)", D.intervals_last_24h);
+  add("10-block window", D.windows_10);
+  add("receive delay", D.receive_delay);
+
+  const t = $("#dist");
+  t.innerHTML = rows.map((r, i) =>
+    `<tr>${r.map(c => `<${i ? "td" : "th"}>${c}</${i ? "td" : "th"}>`).join("")}</tr>`
+  ).join("");
+
+  const via = D.via || {};
+  const parts = Object.entries(via).map(([k, v]) => `${k}: ${v}`).join(" · ");
+  const extra = document.createElement("div");
+  extra.className = "sub";
+  extra.style.marginTop = "10px";
+  extra.textContent = "relay path of captured blocks — " + (parts || "n/a");
+  t.parentNode.appendChild(extra);
+})();
+
+(function reorgs(){
+  const r = D.reorgs;
+  if (!r.count) return;
+  $("#reorgs").innerHTML = `<span class="warn">${r.count} event(s)</span> · ` +
+    r.events.map(e => `${e.event} @${fmtInt(e.height)} <span class="sub">${e.ts}</span>`).join("<br>");
+})();
+
+(function chart(){
+  const c = $("#chart"), ctx = c.getContext("2d");
+  const data = D.series || [];
+  const target = D.network.target_time;
+
+  function draw(){
+    const dpr = window.devicePixelRatio || 1;
+    const w = c.clientWidth, h = c.clientHeight;
+    c.width = w * dpr; c.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    if (!data.length){
+      ctx.fillStyle = "#8b949e"; ctx.font = "12px monospace";
+      ctx.fillText("waiting for blocks…", 12, 24); return;
+    }
+    const pad = { l: 44, r: 10, t: 10, b: 22 };
+    const iw = w - pad.l - pad.r, ih = h - pad.t - pad.b;
+    const vals = data.map(d => d.dt);
+    const vmax = Math.max(target * 3, ...vals);
+    const X = i => pad.l + (data.length === 1 ? iw / 2 : (i / (data.length - 1)) * iw);
+    const Y = v => pad.t + ih - (v / vmax) * ih;
+
+    ctx.strokeStyle = "#30363d"; ctx.lineWidth = 1;
+    ctx.fillStyle = "#8b949e"; ctx.font = "10px monospace"; ctx.textAlign = "right";
+    for (let i = 0; i <= 4; i++){
+      const v = (vmax / 4) * i, y = Y(v);
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+      ctx.fillText(v.toFixed(0) + "s", pad.l - 6, y + 3);
+    }
+    // target line
+    ctx.strokeStyle = "#d29922"; ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(pad.l, Y(target)); ctx.lineTo(w - pad.r, Y(target)); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // interval line
+    ctx.strokeStyle = "#58a6ff"; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    data.forEach((d, i) => i ? ctx.lineTo(X(i), Y(d.dt)) : ctx.moveTo(X(i), Y(d.dt)));
+    ctx.stroke();
+
+    // outliers
+    ctx.fillStyle = "#f85149";
+    data.forEach((d, i) => {
+      if (d.dt > target * 3){
+        ctx.beginPath(); ctx.arc(X(i), Y(d.dt), 2.5, 0, Math.PI * 2); ctx.fill();
+      }
+    });
+
+    // x labels
+    ctx.textAlign = "left"; ctx.fillStyle = "#8b949e";
+    ctx.fillText("#" + data[0].h, pad.l, h - 6);
+    ctx.textAlign = "right";
+    ctx.fillText("#" + data[data.length - 1].h, w - pad.r, h - 6);
+  }
+  window.addEventListener("resize", draw);
+  draw();
+})();
+</script>
+</body>
+</html>
