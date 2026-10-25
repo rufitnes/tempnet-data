@@ -1,0 +1,1 @@
+{"generated_at":"2026-10-25T00:00:31Z","height":340697,"intervals":{"n":295,"mean":59.65,"median":44.0,"p90":130.0,"p99":212.0,"max":277.0,"min":1.0},"windows_10":{"n":29,"mean":605.03,"median":623.0,"p90":791.0,"p99":895.0,"max":895.0,"min":349.0},"timestamp_deviation":{"n":296,"mean":1.41,"median":1.0,"p90":3.0,"p99":5.0,"max":120.0,"min":0.0},"mtp_lag_s":52,"peers":6}
