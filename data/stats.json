@@ -1,33 +1,33 @@
 {
- "generated_at": "2026-10-25T04:16:41Z",
+ "generated_at": "2026-10-25T04:21:49Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
-  "difficulty": 1.707440987963108,
-  "hashrate": 113143082.9114842,
+  "difficulty": 1,
+  "hashrate": 113210204.3201023,
   "peers": 6,
   "mempool_tx": 19,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "sync": {
-  "blocks": 340950,
-  "headers": 340950,
-  "progress": 0.999999,
+  "blocks": 340954,
+  "headers": 340954,
+  "progress": 0.999998,
   "ibd": false
  },
  "tip": {
-  "height": 340950,
-  "hash": "0000000045d0fdd8d234b37a29a845e861323e3377c6c37ac85dc576c16be95e",
-  "header_time": "2026-10-25T04:15:24Z",
-  "mediantime": "2026-10-25T04:13:06Z",
-  "mtp_lag_s": 138
+  "height": 340954,
+  "hash": "00000000b28a39fbd0acfd1ac11d944ff75862fd27ccdc6dd7aaff593168629e",
+  "header_time": "2026-10-25T04:20:05Z",
+  "mediantime": "2026-10-25T04:15:01Z",
+  "mtp_lag_s": 304
  },
  "captured": {
   "from_height": 340402,
-  "to_height": 340950,
-  "blocks": 549,
+  "to_height": 340954,
+  "blocks": 553,
   "from_time": "2026-10-24T19:06:26Z",
-  "to_time": "2026-10-25T04:15:24Z"
+  "to_time": "2026-10-25T04:20:05Z"
  },
  "reorgs": {
   "count": 0,
@@ -42,35 +42,35 @@
   "over_5min_pct": 0.674
  },
  "intervals": {
-  "n": 548,
-  "mean": 60.11,
-  "median": 44.0,
+  "n": 552,
+  "mean": 60.18,
+  "median": 45.0,
   "p90": 130.0,
-  "p99": 208.0,
+  "p99": 206.0,
   "max": 277.0,
   "min": 0.0
  },
  "intervals_last_100": {
   "n": 100,
-  "mean": 61.6,
-  "median": 39.0,
+  "mean": 63.35,
+  "median": 46.0,
   "p90": 132.0,
   "p99": 199.0,
   "max": 213.0,
   "min": 0.0
  },
  "intervals_last_24h": {
-  "n": 548,
-  "mean": 60.11,
-  "median": 44.0,
+  "n": 552,
+  "mean": 60.18,
+  "median": 45.0,
   "p90": 130.0,
-  "p99": 208.0,
+  "p99": 206.0,
   "max": 277.0,
   "min": 0.0
  },
  "windows_10": {
-  "n": 54,
-  "mean": 602.11,
+  "n": 55,
+  "mean": 601.44,
   "median": 583.0,
   "p90": 846.0,
   "p99": 949.0,
@@ -78,8 +78,8 @@
   "min": 279.0
  },
  "timestamp_deviation": {
-  "n": 549,
-  "mean": 1.63,
+  "n": 553,
+  "mean": 1.62,
   "median": 0.0,
   "p90": 3.0,
   "p99": 24.0,
@@ -87,14 +87,14 @@
   "min": 0.0
  },
  "via": {
-  "compact": 547,
+  "compact": 551,
   "direct": 2
  },
  "compact": {
-  "captured_via_compact": 547,
-  "captured_total": 549,
+  "captured_via_compact": 551,
+  "captured_total": 553,
   "missing_tx": {
-   "n": 547,
+   "n": 551,
    "mean": 0.0,
    "median": 0.0,
    "p90": 0.0,
@@ -104,30 +104,6 @@
   }
  },
  "series": [
-  {
-   "h": 340711,
-   "t": "2026-10-25T00:13:10Z",
-   "dt": 4.0,
-   "tsdev": 1.0
-  },
-  {
-   "h": 340712,
-   "t": "2026-10-25T00:15:08Z",
-   "dt": 118.0,
-   "tsdev": 1.0
-  },
-  {
-   "h": 340713,
-   "t": "2026-10-25T00:18:16Z",
-   "dt": 188.0,
-   "tsdev": 3.0
-  },
-  {
-   "h": 340714,
-   "t": "2026-10-25T00:19:14Z",
-   "dt": 58.0,
-   "tsdev": 1.0
-  },
   {
    "h": 340715,
    "t": "2026-10-25T00:19:29Z",
@@ -1542,6 +1518,30 @@
    "h": 340950,
    "t": "2026-10-25T04:15:24Z",
    "dt": 23.0,
+   "tsdev": 0.0
+  },
+  {
+   "h": 340951,
+   "t": "2026-10-25T04:16:59Z",
+   "dt": 95.0,
+   "tsdev": 0.0
+  },
+  {
+   "h": 340952,
+   "t": "2026-10-25T04:17:45Z",
+   "dt": 46.0,
+   "tsdev": 1.0
+  },
+  {
+   "h": 340953,
+   "t": "2026-10-25T04:17:54Z",
+   "dt": 9.0,
+   "tsdev": 0.0
+  },
+  {
+   "h": 340954,
+   "t": "2026-10-25T04:20:05Z",
+   "dt": 131.0,
    "tsdev": 0.0
   }
  ]
