@@ -115,7 +115,7 @@ Both scripts read their paths from the environment (`TEMPNET_LOG`, `TEMPNET_EVEN
 deployment used here: node, listener, exporter and a five-minute timer.
 
 Ideas that would improve the dataset, if you want to build on it: multiple nodes with synchronised
-clocks (turns `receive_delay` into real propagation measurements), `-blocknotify` hooks for exact
+clocks (turns this deviation into a real propagation measurement), `-blocknotify` hooks for exact
 block-arrival times, and per-peer attribution of announcements.
 
 ## Consuming `stats.json`
@@ -134,7 +134,7 @@ mediantime, `mtp_lag_s`), `captured` (first/last height and time in the CSV), `r
 ## Caveats
 
 - The host clock is **not** disciplined by a local NTP daemon for sub-second accuracy. Treat
-  `receive_delay` as indicative and its sub-second digits as noise.
+  `timestamp_deviation` as indicative and its sub-second digits as noise.
 - Everything is measured on **one** node with **one** network path: a sample, not a network-wide
   statistic. No claim here is about propagation across the network.
 - Blocks captured during initial block download or after a restart may be missing from the CSV.
