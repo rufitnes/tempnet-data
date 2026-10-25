@@ -120,8 +120,8 @@ block-arrival times, and per-peer attribution of announcements.
 
 ## Consuming `stats.json`
 
-Top-level keys: `generated_at`, `chain`, `network` (target time, difficulty, hashrate, peers,
-mempool), `sync` (height, headers, progress, IBD flag), `tip` (height, hash, header time,
+Top-level keys: `generated_at`, `chain`, `host_clock` (NTP offset, delay, jitter, stratum),
+`network` (target time, difficulty, hashrate, peers, mempool), `sync` (height, headers, progress, IBD flag), `tip` (height, hash, header time,
 mediantime, `mtp_lag_s`), `captured` (first/last height and time in the CSV), `reorgs`, then
 `expected` (exponential model for the target time), `intervals`, `intervals_last_100`, `intervals_last_24h`, `windows_10`, `timestamp_deviation` (each with
 `n`, `mean`, `median`, `p90`, `p99`, `min`, `max`), `via`, `compact` (blocks reconstructed from
@@ -133,8 +133,10 @@ mediantime, `mtp_lag_s`), `captured` (first/last height and time in the CSV), `r
 
 ## Caveats
 
-- The host clock is **not** disciplined by a local NTP daemon for sub-second accuracy. Treat
-  `timestamp_deviation` as indicative and its sub-second digits as noise.
+- The host clock is synced by `systemd-timesyncd` against the Debian NTP pool. `host_clock` in
+  `stats.json` publishes the offset, delay and jitter — but the offset is from the **last poll**
+  (poll interval here is ~34 min), not from the moment of capture. Treat `timestamp_deviation` as
+  indicative and its sub-second digits as noise.
 - Everything is measured on **one** node with **one** network path: a sample, not a network-wide
   statistic. No claim here is about propagation across the network.
 - Blocks captured during initial block download or after a restart may be missing from the CSV.

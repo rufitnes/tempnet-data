@@ -146,6 +146,50 @@ def read_compact():
     return out
 
 
+def host_clock():
+    """Clock sync status of the capturing host (the measurement's error floor)."""
+    def grab(cmd, key):
+        try:
+            out = subprocess.run(cmd, capture_output=True, text=True, timeout=5).stdout
+        except Exception:
+            return None
+        for line in out.splitlines():
+            if line.strip().startswith(key):
+                return line.split(":", 1)[1].strip()
+        return None
+
+    src = "systemd-timesyncd"
+    offset = grab(["timedatectl", "timesync-status"], "Offset")
+    if offset is None:
+        src = "chrony"
+        offset = grab(["chronyc", "tracking"], "System time")
+    if offset is None:
+        return None
+
+    def ms(v):
+        """Parse a systemd-timesyncd duration like '-11.837ms' into milliseconds."""
+        m = re.search(r"-?\d+(?:[.,]\d+)?", v or "")
+        if not m:
+            return None
+        x = float(m.group(0).replace(",", "."))
+        if "µs" in (v or "") or "us" in (v or ""):
+            return round(x / 1000.0, 3)
+        if "ms" in (v or ""):
+            return round(x, 3)
+        return None
+
+    return {
+        "source": src,
+        "offset_raw": offset,
+        "offset_ms": ms(offset) if src == "systemd-timesyncd" else None,
+        "delay_ms": ms(grab(["timedatectl", "timesync-status"], "Delay") or ""),
+        "jitter_ms": ms(grab(["timedatectl", "timesync-status"], "Jitter") or ""),
+        "stratum": grab(["timedatectl", "timesync-status"], "Stratum"),
+        "poll_interval": grab(["timedatectl", "timesync-status"], "Poll interval"),
+        "note": "offset is as of the last NTP poll, not the moment of capture",
+    }
+
+
 def read_events():
     rows = []
     if not os.path.exists(EVENTS_SRC):
@@ -328,6 +372,7 @@ def main():
             "mempool_tx": mempool.get("size"),
             "version": net.get("subversion"),
         },
+        "host_clock": host_clock(),
         "sync": {
             "blocks": info.get("blocks"),
             "headers": info.get("headers"),
