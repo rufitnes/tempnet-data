@@ -106,7 +106,7 @@ def main():
         now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         line = f.readline()
         if not line:
-            time.sleep(0.5)
+            time.sleep(0.05)
             continue
         try:
             handle_line(line, now)
