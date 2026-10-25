@@ -103,7 +103,7 @@ def main():
             except FileNotFoundError:
                 time.sleep(2)
                 continue
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
         line = f.readline()
         if not line:
             time.sleep(0.05)
