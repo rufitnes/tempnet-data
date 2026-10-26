@@ -1,43 +1,43 @@
 {
- "generated_at": "2026-10-26T04:08:52Z",
+ "generated_at": "2026-10-26T04:14:02Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
-  "difficulty": 1.685570987654321,
-  "hashrate": 113955943.5103184,
+  "difficulty": 1.743276673848855,
+  "hashrate": 112336314.9700445,
   "peers": 6,
-  "mempool_tx": 2,
+  "mempool_tx": 18,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "host_clock": {
   "source": "systemd-timesyncd",
-  "offset_raw": "-6.937ms",
-  "offset_ms": -6.937,
-  "delay_ms": 21.142,
-  "jitter_ms": 6.148,
+  "offset_raw": "+6.107ms",
+  "offset_ms": 6.107,
+  "delay_ms": 21.854,
+  "jitter_ms": 6.056,
   "stratum": "2",
   "poll_interval": "34min 8s (min: 32s; max 34min 8s)",
   "note": "offset is as of the last NTP poll, not the moment of capture"
  },
  "sync": {
-  "blocks": 342382,
-  "headers": 342382,
+  "blocks": 342388,
+  "headers": 342388,
   "progress": 0.999999,
   "ibd": false
  },
  "tip": {
-  "height": 342382,
-  "hash": "000000001cddf8e2586b7e79f0ff7a31f2b0c8cdb4d617893d029f6be7ac5c6b",
-  "header_time": "2026-10-26T04:08:09Z",
-  "mediantime": "2026-10-26T04:02:19Z",
-  "mtp_lag_s": 350
+  "height": 342388,
+  "hash": "000000008d02d2ef2ab2196225d8c1c091148f1ddff9bd64114f0bbf5472844a",
+  "header_time": "2026-10-26T04:12:42Z",
+  "mediantime": "2026-10-26T04:08:59Z",
+  "mtp_lag_s": 223
  },
  "captured": {
   "from_height": 340402,
-  "to_height": 342382,
-  "blocks": 1981,
+  "to_height": 342388,
+  "blocks": 1987,
   "from_time": "2026-10-24T19:06:26Z",
-  "to_time": "2026-10-26T04:08:09Z"
+  "to_time": "2026-10-26T04:12:42Z"
  },
  "reorgs": {
   "count": 0,
@@ -52,8 +52,8 @@
   "over_5min_pct": 0.674
  },
  "intervals": {
-  "n": 1980,
-  "mean": 60.05,
+  "n": 1986,
+  "mean": 60.01,
   "median": 46.0,
   "p90": 129.0,
   "p99": 212.0,
@@ -62,16 +62,16 @@
  },
  "intervals_last_100": {
   "n": 100,
-  "mean": 61.41,
-  "median": 55.0,
-  "p90": 137.0,
-  "p99": 176.0,
+  "mean": 59.4,
+  "median": 54.0,
+  "p90": 134.0,
+  "p99": 172.0,
   "max": 190.0,
   "min": 1.0
  },
  "intervals_last_24h": {
-  "n": 1441,
-  "mean": 59.97,
+  "n": 1444,
+  "mean": 59.89,
   "median": 47.0,
   "p90": 129.0,
   "p99": 214.0,
@@ -88,23 +88,23 @@
   "min": 268.0
  },
  "timestamp_deviation": {
-  "n": 1981,
-  "mean": 1.96,
+  "n": 1987,
+  "mean": 1.95,
   "median": 0.8,
-  "p90": 3.62,
+  "p90": 3.6,
   "p99": 28.0,
   "max": 150.4,
   "min": 0.0
  },
  "via": {
-  "compact": 1977,
+  "compact": 1983,
   "direct": 4
  },
  "compact": {
-  "captured_via_compact": 1977,
-  "captured_total": 1981,
+  "captured_via_compact": 1983,
+  "captured_total": 1987,
   "missing_tx": {
-   "n": 1977,
+   "n": 1983,
    "mean": 0.06,
    "median": 0.0,
    "p90": 0.0,
@@ -114,42 +114,6 @@
   }
  },
  "series": [
-  {
-   "h": 342143,
-   "t": "2026-10-26T00:07:09Z",
-   "dt": 13.0,
-   "tsdev": 2.9
-  },
-  {
-   "h": 342144,
-   "t": "2026-10-26T00:07:55Z",
-   "dt": 46.0,
-   "tsdev": 1.0
-  },
-  {
-   "h": 342145,
-   "t": "2026-10-26T00:10:24Z",
-   "dt": 149.0,
-   "tsdev": 1.2
-  },
-  {
-   "h": 342146,
-   "t": "2026-10-26T00:11:12Z",
-   "dt": 48.0,
-   "tsdev": 3.2
-  },
-  {
-   "h": 342147,
-   "t": "2026-10-26T00:12:30Z",
-   "dt": 78.0,
-   "tsdev": 0.6
-  },
-  {
-   "h": 342148,
-   "t": "2026-10-26T00:12:35Z",
-   "dt": 5.0,
-   "tsdev": 1.0
-  },
   {
    "h": 342149,
    "t": "2026-10-26T00:13:08Z",
@@ -1553,6 +1517,42 @@
    "t": "2026-10-26T04:08:09Z",
    "dt": 1.0,
    "tsdev": 1.0
+  },
+  {
+   "h": 342383,
+   "t": "2026-10-26T04:08:59Z",
+   "dt": 50.0,
+   "tsdev": 3.2
+  },
+  {
+   "h": 342384,
+   "t": "2026-10-26T04:09:25Z",
+   "dt": 26.0,
+   "tsdev": 0.3
+  },
+  {
+   "h": 342385,
+   "t": "2026-10-26T04:10:16Z",
+   "dt": 51.0,
+   "tsdev": 1.0
+  },
+  {
+   "h": 342386,
+   "t": "2026-10-26T04:10:19Z",
+   "dt": 3.0,
+   "tsdev": 0.9
+  },
+  {
+   "h": 342387,
+   "t": "2026-10-26T04:11:13Z",
+   "dt": 54.0,
+   "tsdev": 1.0
+  },
+  {
+   "h": 342388,
+   "t": "2026-10-26T04:12:42Z",
+   "dt": 89.0,
+   "tsdev": 0.4
   }
  ]
 }
