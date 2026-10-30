@@ -105,12 +105,21 @@ def update_compact_index():
         offset = int(open(COMPACT_OFFSET, encoding="utf-8").read().strip())
     except (FileNotFoundError, ValueError):
         offset = 0
+    size = os.path.getsize(LOG_SRC)
+    if offset > size:
+        # bitcoind shrinks debug.log to ~10 MB on restart; restart the index from the
+        # new end instead of waiting for the file to grow past the old offset.
+        print(f"compact index: offset {offset} > log size {size}, resetting to {size}",
+              file=sys.stderr)
+        offset = size
     with open(LOG_SRC, "rb") as f:
         f.seek(offset)
         chunk = f.read()
     cut = chunk.rfind(b"\n") + 1
     complete = chunk[:cut]
     if not complete:
+        with open(COMPACT_OFFSET, "w", encoding="utf-8") as f:
+            f.write(str(offset))
         return
     rows = []
     for line in complete.decode("utf-8", "replace").splitlines():
