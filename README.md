@@ -131,6 +131,13 @@ mediantime, `mtp_lag_s`), `captured` (first/last height and time in the CSV), `r
 `data/compact.csv` columns: `log_time,hash,prefilled,from_mempool,extra_pool,requested`.
 `history/YYYY-MM-DD.jsonl` holds one compact summary line per snapshot.
 
+## Node build
+
+The capture ran on **`v29.2.1-tempnet-20261018`** (commit `4436308`) until **2026-10-30 15:05 UTC**; upstream
+later flagged that build with **p2p bugs**. From that moment the node runs
+**`v29.2.1-tempnet-20261029`** (commit `e29338cb`, upstream snapshot `1ea14c74`). Blocks before and after that
+timestamp come from different builds — relevant when comparing timing or relay behaviour across the whole set.
+
 ## Caveats
 
 - The host clock is synced by `systemd-timesyncd` against the Debian NTP pool. `host_clock` in
