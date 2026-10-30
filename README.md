@@ -11,6 +11,7 @@ never records, and commits the result here every few minutes.
 - **Machine-readable snapshot**: [`data/stats.json`](data/stats.json)
 - **Raw capture**: [`data/events.csv`](data/events.csv)
 - **Compact-relay index**: [`data/compact.csv`](data/compact.csv)
+- **Prebuilt aarch64 binaries** (patched tempnet build): [releases](https://github.com/rufitnes/tempnet-data/releases)
 - **Daily summaries**: [`history/`](history/)
 - **Full-range aggregate**: [`data/full-range-measure.json`](data/full-range-measure.json)
 
