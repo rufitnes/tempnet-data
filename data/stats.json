@@ -1,43 +1,43 @@
 {
- "generated_at": "2026-10-30T04:53:12Z",
+ "generated_at": "2026-10-30T04:58:22Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
-  "difficulty": 93769.00552365565,
-  "hashrate": 5541712945300.045,
+  "difficulty": 92337.66387891557,
+  "hashrate": 5452091423570.675,
   "peers": 6,
-  "mempool_tx": 19,
+  "mempool_tx": 15,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "host_clock": {
   "source": "systemd-timesyncd",
-  "offset_raw": "+2.017ms",
-  "offset_ms": 2.017,
-  "delay_ms": 20.163,
-  "jitter_ms": 3.429,
+  "offset_raw": "-4.532ms",
+  "offset_ms": -4.532,
+  "delay_ms": 20.655,
+  "jitter_ms": 3.262,
   "stratum": "2",
   "poll_interval": "34min 8s (min: 32s; max 34min 8s)",
   "note": "offset is as of the last NTP poll, not the moment of capture"
  },
  "sync": {
-  "blocks": 349130,
-  "headers": 349130,
+  "blocks": 349136,
+  "headers": 349136,
   "progress": 0.999999,
   "ibd": false
  },
  "tip": {
-  "height": 349130,
-  "hash": "0000000000003baaecd9260ddfa8e835c90999938cf21590182e7ea9afb7313b",
-  "header_time": "2026-10-30T04:51:54Z",
-  "mediantime": "2026-10-30T04:44:24Z",
-  "mtp_lag_s": 450
+  "height": 349136,
+  "hash": "00000000000061fdad5d5f88741e7e86a33c172717171ce17773d4845f906d25",
+  "header_time": "2026-10-30T04:57:41Z",
+  "mediantime": "2026-10-30T04:53:34Z",
+  "mtp_lag_s": 247
  },
  "captured": {
   "from_height": 340402,
-  "to_height": 349130,
-  "blocks": 8729,
+  "to_height": 349136,
+  "blocks": 8735,
   "from_time": "2026-10-24T19:06:26Z",
-  "to_time": "2026-10-30T04:51:54Z"
+  "to_time": "2026-10-30T04:57:41Z"
  },
  "reorgs": {
   "count": 0,
@@ -52,7 +52,7 @@
   "over_5min_pct": 0.674
  },
  "intervals": {
-  "n": 8728,
+  "n": 8734,
   "mean": 53.52,
   "median": 37.0,
   "p90": 125.0,
@@ -62,7 +62,7 @@
  },
  "intervals_last_100": {
   "n": 100,
-  "mean": 57.39,
+  "mean": 57.22,
   "median": 45.0,
   "p90": 125.0,
   "p99": 125.0,
@@ -70,8 +70,8 @@
   "min": 2.0
  },
  "intervals_last_24h": {
-  "n": 2393,
-  "mean": 36.13,
+  "n": 2389,
+  "mean": 36.17,
   "median": 16.0,
   "p90": 111.0,
   "p99": 183.0,
@@ -79,8 +79,8 @@
   "min": 0.0
  },
  "windows_10": {
-  "n": 872,
-  "mean": 535.07,
+  "n": 873,
+  "mean": 535.21,
   "median": 563.0,
   "p90": 791.0,
   "p99": 993.0,
@@ -88,7 +88,7 @@
   "min": 15.0
  },
  "timestamp_deviation": {
-  "n": 8729,
+  "n": 8735,
   "mean": 2.13,
   "median": 0.91,
   "p90": 3.85,
@@ -97,14 +97,14 @@
   "min": 0.0
  },
  "via": {
-  "compact": 8499,
+  "compact": 8505,
   "direct": 230
  },
  "compact": {
-  "captured_via_compact": 8499,
-  "captured_total": 8729,
+  "captured_via_compact": 8505,
+  "captured_total": 8735,
   "missing_tx": {
-   "n": 8499,
+   "n": 8505,
    "mean": 0.02,
    "median": 0.0,
    "p90": 0.0,
@@ -114,42 +114,6 @@
   }
  },
  "series": [
-  {
-   "h": 348891,
-   "t": "2026-10-30T01:04:49Z",
-   "dt": 100.0,
-   "tsdev": 3.9
-  },
-  {
-   "h": 348892,
-   "t": "2026-10-30T01:05:54Z",
-   "dt": 65.0,
-   "tsdev": 6.3
-  },
-  {
-   "h": 348893,
-   "t": "2026-10-30T01:06:09Z",
-   "dt": 15.0,
-   "tsdev": 1.0
-  },
-  {
-   "h": 348894,
-   "t": "2026-10-30T01:06:44Z",
-   "dt": 35.0,
-   "tsdev": 2.1
-  },
-  {
-   "h": 348895,
-   "t": "2026-10-30T01:08:44Z",
-   "dt": 120.0,
-   "tsdev": 5.8
-  },
-  {
-   "h": 348896,
-   "t": "2026-10-30T01:10:49Z",
-   "dt": 125.0,
-   "tsdev": 1.9
-  },
   {
    "h": 348897,
    "t": "2026-10-30T01:12:51Z",
@@ -1553,6 +1517,42 @@
    "t": "2026-10-30T04:51:54Z",
    "dt": 95.0,
    "tsdev": 2.2
+  },
+  {
+   "h": 349131,
+   "t": "2026-10-30T04:53:34Z",
+   "dt": 100.0,
+   "tsdev": 5.5
+  },
+  {
+   "h": 349132,
+   "t": "2026-10-30T04:53:44Z",
+   "dt": 10.0,
+   "tsdev": 4.7
+  },
+  {
+   "h": 349133,
+   "t": "2026-10-30T04:53:48Z",
+   "dt": 4.0,
+   "tsdev": 4.4
+  },
+  {
+   "h": 349134,
+   "t": "2026-10-30T04:55:34Z",
+   "dt": 106.0,
+   "tsdev": 4.0
+  },
+  {
+   "h": 349135,
+   "t": "2026-10-30T04:57:39Z",
+   "dt": 125.0,
+   "tsdev": 3.1
+  },
+  {
+   "h": 349136,
+   "t": "2026-10-30T04:57:41Z",
+   "dt": 2.0,
+   "tsdev": 1.5
   }
  ]
 }
