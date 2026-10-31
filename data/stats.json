@@ -1,12 +1,12 @@
 {
- "generated_at": "2026-10-31T03:43:32Z",
+ "generated_at": "2026-10-31T03:48:32Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
   "difficulty": 1,
   "hashrate": 18699123.4611617,
   "peers": 6,
-  "mempool_tx": 2,
+  "mempool_tx": 9,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "host_clock": {
@@ -22,7 +22,7 @@
  "sync": {
   "blocks": 350008,
   "headers": 350008,
-  "progress": 1.0,
+  "progress": 0.999995,
   "ibd": false
  },
  "tip": {
