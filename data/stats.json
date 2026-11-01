@@ -1,43 +1,43 @@
 {
- "generated_at": "2026-11-01T14:19:42Z",
+ "generated_at": "2026-11-01T14:24:52Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
-  "difficulty": 6.433228777618431,
-  "hashrate": 401212411.9201989,
+  "difficulty": 6.264269384015154,
+  "hashrate": 383755951.4133707,
   "peers": 6,
-  "mempool_tx": 10,
+  "mempool_tx": 4,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "host_clock": {
   "source": "systemd-timesyncd",
-  "offset_raw": "+8.202ms",
-  "offset_ms": 8.202,
-  "delay_ms": 18.596,
-  "jitter_ms": 12.421,
+  "offset_raw": "+7.568ms",
+  "offset_ms": 7.568,
+  "delay_ms": 32.502,
+  "jitter_ms": 13.299,
   "stratum": "2",
   "poll_interval": "34min 8s (min: 32s; max 34min 8s)",
   "note": "offset is as of the last NTP poll, not the moment of capture"
  },
  "sync": {
-  "blocks": 351747,
-  "headers": 351747,
-  "progress": 0.999998,
+  "blocks": 351752,
+  "headers": 351752,
+  "progress": 1.0,
   "ibd": false
  },
  "tip": {
-  "height": 351747,
-  "hash": "0000000011047551ef5aefc6a0d981fb230180a1c526f4875a65f0219e69ef1f",
-  "header_time": "2026-11-01T14:17:39Z",
-  "mediantime": "2026-11-01T14:14:06Z",
-  "mtp_lag_s": 213
+  "height": 351752,
+  "hash": "0000000010eef61b3d9e17aad1fd44b732524176a6cccca5673e34656a2c7f3f",
+  "header_time": "2026-11-01T14:24:34Z",
+  "mediantime": "2026-11-01T14:17:39Z",
+  "mtp_lag_s": 415
  },
  "captured": {
   "from_height": 340402,
-  "to_height": 351747,
-  "blocks": 11346,
+  "to_height": 351752,
+  "blocks": 11351,
   "from_time": "2026-10-24T19:06:26Z",
-  "to_time": "2026-11-01T14:17:39Z"
+  "to_time": "2026-11-01T14:24:34Z"
  },
  "reorgs": {
   "count": 0,
@@ -52,8 +52,8 @@
   "over_5min_pct": 0.674
  },
  "intervals": {
-  "n": 11345,
-  "mean": 59.4,
+  "n": 11350,
+  "mean": 59.41,
   "median": 42.0,
   "p90": 129.0,
   "p99": 228.0,
@@ -62,25 +62,25 @@
  },
  "intervals_last_100": {
   "n": 100,
-  "mean": 67.38,
-  "median": 64.0,
+  "mean": 68.54,
+  "median": 65.0,
   "p90": 129.0,
   "p99": 144.0,
   "max": 144.0,
   "min": 1.0
  },
  "intervals_last_24h": {
-  "n": 1366,
-  "mean": 63.29,
-  "median": 53.0,
+  "n": 1364,
+  "mean": 63.38,
+  "median": 54.0,
   "p90": 125.0,
   "p99": 145.0,
   "max": 539.0,
   "min": 1.0
  },
  "windows_10": {
-  "n": 1134,
-  "mean": 594.06,
+  "n": 1135,
+  "mean": 594.09,
   "median": 584.0,
   "p90": 838.0,
   "p99": 1907.0,
@@ -88,23 +88,23 @@
   "min": 15.0
  },
  "timestamp_deviation": {
-  "n": 11346,
+  "n": 11351,
   "mean": 2.38,
   "median": 1.03,
   "p90": 4.15,
-  "p99": 21.0,
+  "p99": 19.51,
   "max": 216.19,
   "min": 0.0
  },
  "via": {
-  "compact": 11096,
+  "compact": 11101,
   "direct": 250
  },
  "compact": {
-  "captured_via_compact": 11096,
-  "captured_total": 11346,
+  "captured_via_compact": 11101,
+  "captured_total": 11351,
   "missing_tx": {
-   "n": 11096,
+   "n": 11101,
    "mean": 0.01,
    "median": 0.0,
    "p90": 0.0,
@@ -114,36 +114,6 @@
   }
  },
  "series": [
-  {
-   "h": 351508,
-   "t": "2026-11-01T10:08:03Z",
-   "dt": 12.0,
-   "tsdev": 3.2
-  },
-  {
-   "h": 351509,
-   "t": "2026-11-01T10:08:25Z",
-   "dt": 22.0,
-   "tsdev": 4.1
-  },
-  {
-   "h": 351510,
-   "t": "2026-11-01T10:09:07Z",
-   "dt": 42.0,
-   "tsdev": 0.3
-  },
-  {
-   "h": 351511,
-   "t": "2026-11-01T10:10:15Z",
-   "dt": 68.0,
-   "tsdev": 0.2
-  },
-  {
-   "h": 351512,
-   "t": "2026-11-01T10:12:18Z",
-   "dt": 123.0,
-   "tsdev": 3.1
-  },
   {
    "h": 351513,
    "t": "2026-11-01T10:12:33Z",
@@ -1553,6 +1523,36 @@
    "t": "2026-11-01T14:17:39Z",
    "dt": 27.0,
    "tsdev": 0.3
+  },
+  {
+   "h": 351748,
+   "t": "2026-11-01T14:19:41Z",
+   "dt": 122.0,
+   "tsdev": 2.7
+  },
+  {
+   "h": 351749,
+   "t": "2026-11-01T14:21:46Z",
+   "dt": 125.0,
+   "tsdev": 2.9
+  },
+  {
+   "h": 351750,
+   "t": "2026-11-01T14:22:27Z",
+   "dt": 41.0,
+   "tsdev": 2.7
+  },
+  {
+   "h": 351751,
+   "t": "2026-11-01T14:24:30Z",
+   "dt": 123.0,
+   "tsdev": 3.7
+  },
+  {
+   "h": 351752,
+   "t": "2026-11-01T14:24:34Z",
+   "dt": 4.0,
+   "tsdev": 0.7
   }
  ]
 }
