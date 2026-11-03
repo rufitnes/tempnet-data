@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-03T13:47:02Z",
+ "generated_at": "2026-11-03T13:52:04Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
@@ -22,7 +22,7 @@
  "sync": {
   "blocks": 355173,
   "headers": 355173,
-  "progress": 0.999997,
+  "progress": 0.999992,
   "ibd": false
  },
  "tip": {
