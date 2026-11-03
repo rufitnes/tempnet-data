@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-03T05:02:28Z",
+ "generated_at": "2026-11-03T05:07:28Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
@@ -11,10 +11,10 @@
  },
  "host_clock": {
   "source": "systemd-timesyncd",
-  "offset_raw": "+1.078ms",
-  "offset_ms": 1.078,
-  "delay_ms": 19.511,
-  "jitter_ms": 9.686,
+  "offset_raw": "+1.680ms",
+  "offset_ms": 1.68,
+  "delay_ms": 26.423,
+  "jitter_ms": 9.7,
   "stratum": "2",
   "poll_interval": "34min 8s (min: 32s; max 34min 8s)",
   "note": "offset is as of the last NTP poll, not the moment of capture"
@@ -22,7 +22,7 @@
  "sync": {
   "blocks": 354675,
   "headers": 354675,
-  "progress": 0.999999,
+  "progress": 0.999995,
   "ibd": false
  },
  "tip": {
