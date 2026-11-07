@@ -1,43 +1,43 @@
 {
- "generated_at": "2026-11-07T06:53:02Z",
+ "generated_at": "2026-11-07T06:58:12Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
-  "difficulty": 2.717821072437872,
-  "hashrate": 179293393.9910996,
-  "peers": 9,
-  "mempool_tx": 88,
+  "difficulty": 2.773790764380652,
+  "hashrate": 179863847.6372648,
+  "peers": 10,
+  "mempool_tx": 143,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "host_clock": {
   "source": "systemd-timesyncd",
-  "offset_raw": "-6.642ms",
-  "offset_ms": -6.642,
-  "delay_ms": 17.737,
-  "jitter_ms": 10.708,
+  "offset_raw": "+17.695ms",
+  "offset_ms": 17.695,
+  "delay_ms": 44.263,
+  "jitter_ms": 12.514,
   "stratum": "2",
   "poll_interval": "34min 8s (min: 32s; max 34min 8s)",
   "note": "offset is as of the last NTP poll, not the moment of capture"
  },
  "sync": {
-  "blocks": 359868,
-  "headers": 359868,
-  "progress": 1.0,
+  "blocks": 359874,
+  "headers": 359874,
+  "progress": 0.999999,
   "ibd": false
  },
  "tip": {
-  "height": 359868,
-  "hash": "000000003dd6f3e21756b904d0272f9b89247b6d07619d762dd193481b20e9f7",
-  "header_time": "2026-11-07T06:52:53Z",
-  "mediantime": "2026-11-07T06:49:05Z",
-  "mtp_lag_s": 228
+  "height": 359874,
+  "hash": "000000000dbb84f3d6fedcc8a669e9f39923d571c7f53481d2e51468c7ff5f47",
+  "header_time": "2026-11-07T06:57:19Z",
+  "mediantime": "2026-11-07T06:53:56Z",
+  "mtp_lag_s": 203
  },
  "captured": {
   "from_height": 340402,
-  "to_height": 359868,
-  "blocks": 19467,
+  "to_height": 359874,
+  "blocks": 19473,
   "from_time": "2026-10-24T19:06:26Z",
-  "to_time": "2026-11-07T06:52:53Z"
+  "to_time": "2026-11-07T06:57:19Z"
  },
  "reorgs": {
   "count": 0,
@@ -52,8 +52,8 @@
   "over_5min_pct": 0.674
  },
  "intervals": {
-  "n": 19461,
-  "mean": 59.91,
+  "n": 19467,
+  "mean": 59.9,
   "median": 40.0,
   "p90": 130.0,
   "p99": 267.0,
@@ -62,17 +62,17 @@
  },
  "intervals_last_100": {
   "n": 100,
-  "mean": 57.06,
-  "median": 46.0,
+  "mean": 56.77,
+  "median": 48.0,
   "p90": 126.0,
   "p99": 203.0,
   "max": 211.0,
   "min": 0.0
  },
  "intervals_last_24h": {
-  "n": 1140,
-  "mean": 76.07,
-  "median": 70.0,
+  "n": 1144,
+  "mean": 75.81,
+  "median": 69.0,
   "p90": 136.0,
   "p99": 206.0,
   "max": 314.0,
@@ -88,7 +88,7 @@
   "min": 7.0
  },
  "timestamp_deviation": {
-  "n": 19467,
+  "n": 19473,
   "mean": 2.98,
   "median": 2.17,
   "p90": 4.62,
@@ -97,14 +97,14 @@
   "min": 0.0
  },
  "via": {
-  "compact": 18929,
+  "compact": 18935,
   "direct": 538
  },
  "compact": {
-  "captured_via_compact": 18929,
-  "captured_total": 19467,
+  "captured_via_compact": 18935,
+  "captured_total": 19473,
   "missing_tx": {
-   "n": 18929,
+   "n": 18935,
    "mean": 0.37,
    "median": 0.0,
    "p90": 0.0,
@@ -114,42 +114,6 @@
   }
  },
  "series": [
-  {
-   "h": 359629,
-   "t": "2026-11-07T02:48:12Z",
-   "dt": 158.0,
-   "tsdev": 0.5
-  },
-  {
-   "h": 359630,
-   "t": "2026-11-07T02:48:33Z",
-   "dt": 21.0,
-   "tsdev": 3.9
-  },
-  {
-   "h": 359631,
-   "t": "2026-11-07T02:51:07Z",
-   "dt": 154.0,
-   "tsdev": 13.8
-  },
-  {
-   "h": 359632,
-   "t": "2026-11-07T02:52:00Z",
-   "dt": 53.0,
-   "tsdev": 4.0
-  },
-  {
-   "h": 359633,
-   "t": "2026-11-07T02:53:12Z",
-   "dt": 72.0,
-   "tsdev": 13.0
-  },
-  {
-   "h": 359634,
-   "t": "2026-11-07T02:53:49Z",
-   "dt": 37.0,
-   "tsdev": 12.8
-  },
   {
    "h": 359635,
    "t": "2026-11-07T02:54:38Z",
@@ -1553,6 +1517,42 @@
    "t": "2026-11-07T06:52:53Z",
    "dt": 6.0,
    "tsdev": 2.1
+  },
+  {
+   "h": 359869,
+   "t": "2026-11-07T06:53:56Z",
+   "dt": 63.0,
+   "tsdev": 0.3
+  },
+  {
+   "h": 359870,
+   "t": "2026-11-07T06:55:12Z",
+   "dt": 76.0,
+   "tsdev": 0.4
+  },
+  {
+   "h": 359871,
+   "t": "2026-11-07T06:55:51Z",
+   "dt": 39.0,
+   "tsdev": 2.0
+  },
+  {
+   "h": 359872,
+   "t": "2026-11-07T06:56:23Z",
+   "dt": 32.0,
+   "tsdev": 0.8
+  },
+  {
+   "h": 359873,
+   "t": "2026-11-07T06:57:01Z",
+   "dt": 38.0,
+   "tsdev": 4.5
+  },
+  {
+   "h": 359874,
+   "t": "2026-11-07T06:57:19Z",
+   "dt": 18.0,
+   "tsdev": 0.2
   }
  ]
 }
