@@ -1,43 +1,43 @@
 {
- "generated_at": "2026-11-08T22:39:02Z",
+ "generated_at": "2026-11-08T22:44:12Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
-  "difficulty": 3.603942972627411,
-  "hashrate": 234541145.0529155,
+  "difficulty": 3.505361165679012,
+  "hashrate": 232527706.1375776,
   "peers": 9,
-  "mempool_tx": 116,
+  "mempool_tx": 47,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "host_clock": {
   "source": "systemd-timesyncd",
-  "offset_raw": "-1.519ms",
-  "offset_ms": -1.519,
-  "delay_ms": 23.0,
-  "jitter_ms": 11.422,
+  "offset_raw": "+161us",
+  "offset_ms": 0.161,
+  "delay_ms": 17.861,
+  "jitter_ms": 10.398,
   "stratum": "2",
   "poll_interval": "34min 8s (min: 32s; max 34min 8s)",
   "note": "offset is as of the last NTP poll, not the moment of capture"
  },
  "sync": {
-  "blocks": 362276,
-  "headers": 362276,
-  "progress": 0.999998,
+  "blocks": 362281,
+  "headers": 362281,
+  "progress": 1.0,
   "ibd": false
  },
  "tip": {
-  "height": 362276,
-  "hash": "0000000035f217aa95749a6afba298801cde6d6be5320da661d3fac150be98e6",
-  "header_time": "2026-11-08T22:37:04Z",
-  "mediantime": "2026-11-08T22:33:21Z",
-  "mtp_lag_s": 223
+  "height": 362281,
+  "hash": "0000000010781ee3fb35ad57bc8405280ddf229be0baf524009ec1ddad413c95",
+  "header_time": "2026-11-08T22:43:59Z",
+  "mediantime": "2026-11-08T22:37:04Z",
+  "mtp_lag_s": 415
  },
  "captured": {
   "from_height": 340402,
-  "to_height": 362276,
-  "blocks": 21875,
+  "to_height": 362281,
+  "blocks": 21880,
   "from_time": "2026-10-24T19:06:26Z",
-  "to_time": "2026-11-08T22:37:04Z"
+  "to_time": "2026-11-08T22:43:59Z"
  },
  "reorgs": {
   "count": 0,
@@ -52,8 +52,8 @@
   "over_5min_pct": 0.674
  },
  "intervals": {
-  "n": 21866,
-  "mean": 59.87,
+  "n": 21871,
+  "mean": 59.88,
   "median": 40.0,
   "p90": 130.0,
   "p99": 256.0,
@@ -62,25 +62,25 @@
  },
  "intervals_last_100": {
   "n": 100,
-  "mean": 57.59,
-  "median": 53.0,
-  "p90": 121.0,
-  "p99": 147.0,
-  "max": 159.0,
+  "mean": 58.16,
+  "median": 52.0,
+  "p90": 125.0,
+  "p99": 159.0,
+  "max": 182.0,
   "min": 0.0
  },
  "intervals_last_24h": {
-  "n": 1490,
-  "mean": 58.11,
+  "n": 1483,
+  "mean": 58.42,
   "median": 45.0,
-  "p90": 127.0,
+  "p90": 128.0,
   "p99": 195.0,
   "max": 297.0,
   "min": 0.0
  },
  "windows_10": {
-  "n": 2186,
-  "mean": 598.78,
+  "n": 2187,
+  "mean": 598.8,
   "median": 577.0,
   "p90": 860.0,
   "p99": 2419.0,
@@ -88,7 +88,7 @@
   "min": 7.0
  },
  "timestamp_deviation": {
-  "n": 21875,
+  "n": 21880,
   "mean": 3.06,
   "median": 1.87,
   "p90": 4.64,
@@ -97,14 +97,14 @@
   "min": 0.0
  },
  "via": {
-  "compact": 21320,
+  "compact": 21325,
   "direct": 555
  },
  "compact": {
-  "captured_via_compact": 21320,
-  "captured_total": 21875,
+  "captured_via_compact": 21325,
+  "captured_total": 21880,
   "missing_tx": {
-   "n": 21320,
+   "n": 21325,
    "mean": 0.84,
    "median": 0.0,
    "p90": 0.0,
@@ -114,36 +114,6 @@
   }
  },
  "series": [
-  {
-   "h": 362037,
-   "t": "2026-11-08T18:44:42Z",
-   "dt": 69.0,
-   "tsdev": 1.6
-  },
-  {
-   "h": 362038,
-   "t": "2026-11-08T18:45:47Z",
-   "dt": 65.0,
-   "tsdev": 0.4
-  },
-  {
-   "h": 362039,
-   "t": "2026-11-08T18:47:04Z",
-   "dt": 77.0,
-   "tsdev": 15.5
-  },
-  {
-   "h": 362040,
-   "t": "2026-11-08T18:49:04Z",
-   "dt": 120.0,
-   "tsdev": 88.3
-  },
-  {
-   "h": 362041,
-   "t": "2026-11-08T18:51:04Z",
-   "dt": 120.0,
-   "tsdev": 1.2
-  },
   {
    "h": 362042,
    "t": "2026-11-08T18:51:43Z",
@@ -1553,6 +1523,36 @@
    "t": "2026-11-08T22:37:04Z",
    "dt": 43.0,
    "tsdev": 3.0
+  },
+  {
+   "h": 362277,
+   "t": "2026-11-08T22:39:07Z",
+   "dt": 123.0,
+   "tsdev": 0.3
+  },
+  {
+   "h": 362278,
+   "t": "2026-11-08T22:42:09Z",
+   "dt": 182.0,
+   "tsdev": 3.3
+  },
+  {
+   "h": 362279,
+   "t": "2026-11-08T22:43:01Z",
+   "dt": 52.0,
+   "tsdev": 3.9
+  },
+  {
+   "h": 362280,
+   "t": "2026-11-08T22:43:45Z",
+   "dt": 44.0,
+   "tsdev": 1.0
+  },
+  {
+   "h": 362281,
+   "t": "2026-11-08T22:43:59Z",
+   "dt": 14.0,
+   "tsdev": 1.1
   }
  ]
 }
