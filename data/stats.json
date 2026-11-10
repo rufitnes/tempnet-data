@@ -1,43 +1,43 @@
 {
- "generated_at": "2026-11-10T10:31:52Z",
+ "generated_at": "2026-11-10T10:37:01Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
-  "difficulty": 36.53582815031621,
-  "hashrate": 483066144.3207682,
+  "difficulty": 36.42358887294375,
+  "hashrate": 568698588.5385748,
   "peers": 9,
-  "mempool_tx": 4,
+  "mempool_tx": 13,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "host_clock": {
   "source": "systemd-timesyncd",
-  "offset_raw": "+5.070ms",
-  "offset_ms": 5.07,
-  "delay_ms": 20.402,
-  "jitter_ms": 5.411,
+  "offset_raw": "-2.554ms",
+  "offset_ms": -2.554,
+  "delay_ms": 16.964,
+  "jitter_ms": 5.131,
   "stratum": "2",
   "poll_interval": "34min 8s (min: 32s; max 34min 8s)",
   "note": "offset is as of the last NTP poll, not the moment of capture"
  },
  "sync": {
-  "blocks": 364630,
-  "headers": 364630,
+  "blocks": 364636,
+  "headers": 364636,
   "progress": 0.999999,
   "ibd": false
  },
  "tip": {
-  "height": 364630,
-  "hash": "0000000001be1593a2f6400b663343163d5cbf88134155144648843e84801d8f",
-  "header_time": "2026-11-10T10:30:58Z",
-  "mediantime": "2026-11-10T10:21:12Z",
-  "mtp_lag_s": 586
+  "height": 364636,
+  "hash": "000000000581be5f9f7278fe08feaedd4ebba582c6fb9bac9dd1442a2c2788a4",
+  "header_time": "2026-11-10T10:36:12Z",
+  "mediantime": "2026-11-10T10:32:59Z",
+  "mtp_lag_s": 193
  },
  "captured": {
   "from_height": 340402,
-  "to_height": 364630,
-  "blocks": 24229,
+  "to_height": 364636,
+  "blocks": 24235,
   "from_time": "2026-10-24T19:06:26Z",
-  "to_time": "2026-11-10T10:30:58Z"
+  "to_time": "2026-11-10T10:36:12Z"
  },
  "reorgs": {
   "count": 0,
@@ -52,7 +52,7 @@
   "over_5min_pct": 0.674
  },
  "intervals": {
-  "n": 24220,
+  "n": 24226,
   "mean": 59.39,
   "median": 39.0,
   "p90": 130.0,
@@ -62,18 +62,18 @@
  },
  "intervals_last_100": {
   "n": 100,
-  "mean": 125.83,
-  "median": 122.0,
-  "p90": 193.0,
-  "p99": 372.0,
-  "max": 390.0,
+  "mean": 116.41,
+  "median": 121.0,
+  "p90": 190.0,
+  "p99": 358.0,
+  "max": 372.0,
   "min": 4.0
  },
  "intervals_last_24h": {
-  "n": 1647,
-  "mean": 52.51,
+  "n": 1648,
+  "mean": 52.44,
   "median": 10.0,
-  "p90": 144.0,
+  "p90": 143.0,
   "p99": 496.0,
   "max": 733.0,
   "min": 0.0
@@ -88,7 +88,7 @@
   "min": 6.0
  },
  "timestamp_deviation": {
-  "n": 24229,
+  "n": 24235,
   "mean": 3.0,
   "median": 1.86,
   "p90": 4.59,
@@ -97,14 +97,14 @@
   "min": 0.0
  },
  "via": {
-  "compact": 23406,
+  "compact": 23412,
   "direct": 823
  },
  "compact": {
-  "captured_via_compact": 23406,
-  "captured_total": 24229,
+  "captured_via_compact": 23412,
+  "captured_total": 24235,
   "missing_tx": {
-   "n": 23406,
+   "n": 23412,
    "mean": 0.76,
    "median": 0.0,
    "p90": 0.0,
@@ -114,42 +114,6 @@
   }
  },
  "series": [
-  {
-   "h": 364391,
-   "t": "2026-11-09T21:59:48Z",
-   "dt": 392.0,
-   "tsdev": 1.1
-  },
-  {
-   "h": 364392,
-   "t": "2026-11-09T22:01:50Z",
-   "dt": 122.0,
-   "tsdev": 1.1
-  },
-  {
-   "h": 364393,
-   "t": "2026-11-09T22:04:30Z",
-   "dt": 160.0,
-   "tsdev": 0.4
-  },
-  {
-   "h": 364394,
-   "t": "2026-11-09T22:07:58Z",
-   "dt": 208.0,
-   "tsdev": 0.8
-  },
-  {
-   "h": 364395,
-   "t": "2026-11-09T22:10:41Z",
-   "dt": 163.0,
-   "tsdev": 1.1
-  },
-  {
-   "h": 364396,
-   "t": "2026-11-09T22:12:44Z",
-   "dt": 123.0,
-   "tsdev": 2.3
-  },
   {
    "h": 364397,
    "t": "2026-11-09T22:15:30Z",
@@ -1553,6 +1517,42 @@
    "t": "2026-11-10T10:30:58Z",
    "dt": 66.0,
    "tsdev": 3.9
+  },
+  {
+   "h": 364631,
+   "t": "2026-11-10T10:32:59Z",
+   "dt": 121.0,
+   "tsdev": 3.4
+  },
+  {
+   "h": 364632,
+   "t": "2026-11-10T10:33:24Z",
+   "dt": 25.0,
+   "tsdev": 4.4
+  },
+  {
+   "h": 364633,
+   "t": "2026-11-10T10:34:40Z",
+   "dt": 76.0,
+   "tsdev": 0.5
+  },
+  {
+   "h": 364634,
+   "t": "2026-11-10T10:35:06Z",
+   "dt": 26.0,
+   "tsdev": 3.4
+  },
+  {
+   "h": 364635,
+   "t": "2026-11-10T10:36:08Z",
+   "dt": 62.0,
+   "tsdev": 4.2
+  },
+  {
+   "h": 364636,
+   "t": "2026-11-10T10:36:12Z",
+   "dt": 4.0,
+   "tsdev": 0.6
   }
  ]
 }
