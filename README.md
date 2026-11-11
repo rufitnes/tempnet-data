@@ -136,7 +136,7 @@ mediantime, `mtp_lag_s`), `captured` (first/last height and time in the CSV), `r
 
 The capture ran on **`v29.2.1-tempnet-20261018`** (commit `4436308`) until **2026-10-30 15:05 UTC**; upstream
 later flagged that build with **p2p bugs**. From that moment the node runs
-**`v29.2.1-tempnet-20261029`** (commit `e29338cb`, upstream snapshot `1ea14c74`). Blocks before and after that
+**`v29.2.1-tempnet-20261029`** (commit `e29338cb`, upstream snapshot `1ea14c74`). On **2026-11-11 00:29:49 UTC** (block 365,274) it moved to **`v29.2.1-tempnet-20261110`** (snapshot 2026-11-10: BCHN MR !2184 plus the last-minute coinbase/ASERT amendments). That build carries a **software expiry of 2026-11-15 12:00 UTC**. Blocks before and after that
 timestamp come from different builds — relevant when comparing timing or relay behaviour across the whole set.
 
 ## Caveats
@@ -148,6 +148,7 @@ timestamp come from different builds — relevant when comparing timing or relay
 - Everything is measured on **one** node with **one** network path: a sample, not a network-wide
   statistic. No claim here is about propagation across the network.
 - Blocks captured during initial block download or after a restart may be missing from the CSV.
+- **Duplicate rows (found 2026-11-11):** a second, manually started listener had been appending to the same `events.csv` as the systemd one (since 2026-10-24). It was killed on 2026-11-11 00:31 UTC. The raw file has 51,167 rows against 50,028 distinct `(event_type, hash)` pairs, i.e. about 1,139 duplicates. The exporter now dedupes by `(event, hash)` keeping the earliest `ts_local` (2026-11-11); the raw file is untouched and keeps the duplicates. The 2026-11-11 00:29-00:30 restart also lost block 365,275 (no rows).
 - This is a **test network** with no economic value. Data may be lost if the host or disk dies.
 
 ## License

@@ -4,7 +4,7 @@
 Reads the tempnet node (RPC) and the listener capture (/mnt/tempnet/events.csv),
 computes chain timing metrics, writes:
   data/stats.json      machine-readable snapshot
-  data/events.csv      copy of the listener capture
+  data/events.csv      deduplicated copy of the listener capture
   index.html           self-contained dashboard (data inlined)
   history/YYYY-MM-DD.jsonl  append-only one-line summaries
 and commits+pushes on the hybrid rule: 10 new blocks OR 15 min OR a reorg,
@@ -35,6 +35,9 @@ SECS_TRIGGER = 300
 SERIES_N = 240
 
 REORG_EVENTS = {"REORGANIZE", "DisconnectTip", "BlockDisconnected"}
+
+EVENT_FIELDS = ["ts_local", "event", "height", "hash", "header_time", "via", "raw"]
+MAX_TS = datetime.max.replace(tzinfo=timezone.utc)
 
 RE_RECON = re.compile(
     r"^(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ) Successfully reconstructed block ([0-9a-f]{64}) "
@@ -209,6 +212,38 @@ def read_events():
     return rows
 
 
+def event_key(r):
+    h = (r.get("hash") or "").strip()
+    if h:
+        return (r.get("event"), h)
+    return (r.get("event"), (r.get("raw") or "").strip())
+
+
+def dedupe_rows(rows):
+    """Drop rows written twice when more than one listener tails the same log.
+
+    Duplicates share (event, hash); keep the one with the earliest ts_local.
+    Hashless events (REORGANIZE) fall back to the raw log line as the key, so
+    separate reorgs are never collapsed.
+    """
+    earliest = {}
+    for r in rows:
+        k = event_key(r)
+        ts = parse_ts(r.get("ts_local")) or MAX_TS
+        if k not in earliest or ts < earliest[k]:
+            earliest[k] = ts
+    seen = set()
+    out = []
+    for r in rows:
+        k = event_key(r)
+        if k in seen:
+            continue
+        if (parse_ts(r.get("ts_local")) or MAX_TS) == earliest[k]:
+            seen.add(k)
+            out.append(r)
+    return out
+
+
 def chain_blocks(rows, compact):
     """Unique consecutive UpdateTip blocks, ordered by height."""
     by_h = {}
@@ -358,7 +393,7 @@ def main():
         print(f"node unavailable, skipping: {e}", file=sys.stderr)
         return 0
 
-    rows = read_events()
+    rows = dedupe_rows(read_events())
     update_compact_index()
     blocks = chain_blocks(rows, read_compact())
     metrics = compute(blocks, info["blocks"])
@@ -413,9 +448,10 @@ def main():
     with open(os.path.join(BASE, "index.html"), "w", encoding="utf-8") as f:
         f.write(render_html(stats))
     if os.path.exists(EVENTS_SRC):
-        with open(EVENTS_SRC, encoding="utf-8", errors="replace") as src, \
-                open(os.path.join(DATA, "events.csv"), "w", encoding="utf-8") as dst:
-            dst.write(src.read())
+        with open(os.path.join(DATA, "events.csv"), "w", newline="", encoding="utf-8") as dst:
+            w = csv.DictWriter(dst, fieldnames=EVENT_FIELDS, extrasaction="ignore")
+            w.writeheader()
+            w.writerows(rows)
 
     st = load_state() or {}
     height = info.get("blocks") or 0
