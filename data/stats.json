@@ -1,12 +1,12 @@
 {
- "generated_at": "2026-11-11T17:21:32Z",
+ "generated_at": "2026-11-11T17:26:33Z",
  "chain": "temp",
  "network": {
   "target_time": 60,
-  "difficulty": 3.339467415681581,
-  "hashrate": 244039275.5388325,
+  "difficulty": 1,
+  "hashrate": 235035059.9471322,
   "peers": 9,
-  "mempool_tx": 38,
+  "mempool_tx": 31,
   "version": "/Bitcoin Cash Node:29.2.1(asgaya-pichan)/"
  },
  "host_clock": {
@@ -20,17 +20,17 @@
   "note": "offset is as of the last NTP poll, not the moment of capture"
  },
  "sync": {
-  "blocks": 366273,
-  "headers": 366273,
+  "blocks": 366275,
+  "headers": 366275,
   "progress": 0.999999,
   "ibd": false
  },
  "tip": {
-  "height": 366273,
-  "hash": "0000000032c2dee6b860096228572c3c2ee0cc3aa5e0015448a5b245b382c2cc",
-  "header_time": "2026-11-11T17:20:25Z",
-  "mediantime": "2026-11-11T17:17:18Z",
-  "mtp_lag_s": 187
+  "height": 366275,
+  "hash": "000000009b7104aab17c89516af323030963ab6cef693ace090f2514e48b8caa",
+  "header_time": "2026-11-11T17:24:52Z",
+  "mediantime": "2026-11-11T17:17:41Z",
+  "mtp_lag_s": 431
  },
  "captured": {
   "from_height": 340402,
